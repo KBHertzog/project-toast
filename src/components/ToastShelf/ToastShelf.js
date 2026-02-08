@@ -6,18 +6,6 @@ import styles from './ToastShelf.module.css';
 
 function ToastShelf() {
   const {toastStack, setToastStack} = React.useContext(ToastContext);
-  React.useEffect(() => {
-    const dismissAll = (e) => {
-      if (e.key === 'Escape') {
-        setToastStack([]);
-      }
-    }
-
-    window.addEventListener('keydown', dismissAll);
-    return () => {
-      window.removeEventListener('keydown', dismissAll);
-    };
-  }, [setToastStack]);
   return (
     <ol className={styles.wrapper}
     role='region'
