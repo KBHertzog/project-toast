@@ -6,8 +6,23 @@ import styles from './ToastShelf.module.css';
 
 function ToastShelf() {
   const {toastStack, setToastStack} = React.useContext(ToastContext);
+  React.useEffect(() => {
+    const dismissAll = (e) => {
+      if (e.key === 'Escape') {
+        setToastStack([]);
+      }
+    }
+
+    window.addEventListener('keydown', dismissAll);
+    return () => {
+      window.removeEventListener('keydown', dismissAll);
+    };
+  }, [setToastStack]);
   return (
-    <ol className={styles.wrapper}>
+    <ol className={styles.wrapper}
+    role='region'
+    aria-live='polite'
+    aria-label='Notification'>
       {toastStack.map(({message, variant, id}) => (
         <li key={id} className={styles.toastWrapper}>
           <Toast variant={variant} onDismiss={() => {
